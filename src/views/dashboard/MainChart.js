@@ -3,8 +3,10 @@ import React, { useEffect, useRef } from 'react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle } from '@coreui/utils'
 
-const MainChart = () => {
+const MainChart = ({data = []}) => {
   const chartRef = useRef(null)
+
+
 
   useEffect(() => {
     document.documentElement.addEventListener('ColorSchemeChange', () => {
@@ -32,7 +34,7 @@ const MainChart = () => {
     <>
       <CChartLine
         data={{
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: ['Janv.', 'Fevr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil', "Aôut", "Sept.", "Oct."],
           datasets: [
             {
               label: 'Transactions reussies',
@@ -40,7 +42,7 @@ const MainChart = () => {
               borderColor: 'rgba(0, 255, 0, 1)', // Green
               pointBackgroundColor: 'rgba(0, 255, 0, 1)', // Green
               pointBorderColor: '#fff',
-              data: [random(), random(), random(), random(), random(), random(), random()],
+              data: data.map((d)=> d.transactionReussie),
             },
             {
               label: 'Transactions bloquées',
@@ -48,7 +50,7 @@ const MainChart = () => {
               borderColor: 'rgba(219, 94, 93, 1)', // Red
               pointBackgroundColor: 'rgba(219, 94, 93, 1)', // Red
               pointBorderColor: '#fff',
-              data: [random(), random(), random(), random(), random(), random(), random()],
+              data: data.map((d)=> d.transactionBloquee),
             },
           ],
         }}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -18,6 +18,11 @@ import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 const WidgetsDropdown = (props) => {
   const widgetChartRef1 = useRef(null)
   const widgetChartRef2 = useRef(null)
+
+  const format = props.dataFormat
+  
+
+  console.log('donne formated\n',JSON.stringify(format))
 
   useEffect(() => {
     document.documentElement.addEventListener('ColorSchemeChange', () => {
@@ -45,9 +50,9 @@ const WidgetsDropdown = (props) => {
             color="primary"
             value={
               <>
-                26K{' '}
+                { new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD', notation: 'compact' }).format(format?.transaction?.montant)}
                 <span className="fs-6 fw-normal">
-                  (-12.4% <CIcon icon={cilArrowBottom} />)
+                   ({ new Intl.NumberFormat('fr-FR', { style: 'decimal', notation: 'compact' }).format(format?.transaction?.nbr)})
                 </span>
               </>
             }
@@ -66,67 +71,54 @@ const WidgetsDropdown = (props) => {
             //   </CDropdown>
             // }
             chart={
-              <CChartLine
-                ref={widgetChartRef1}
-                className="mt-3 mx-3"
-                style={{ height: '70px' }}
-                data={{
-                  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                  datasets: [
-                    {
-                      label: 'My First dataset',
-                      backgroundColor: 'transparent',
-                      borderColor: 'rgba(255,255,255,.55)',
-                      pointBackgroundColor: getStyle('--cui-primary'),
-                      data: [65, 59, 84, 84, 51, 55, 40],
+              <CChartBar
+              className="mt-3 mx-3"
+              style={{ height: '70px' }}
+              data={{
+                labels: ['Janv.', 'Fevr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil', "Aôut", "Sept.", "Oct."],
+                datasets: [
+                  {
+                    label: 'Transaction',
+                    backgroundColor: 'rgba(255,255,255,.2)',
+                    borderColor: 'rgba(255,255,255,.55)',
+                    data: Object.values(format.chart).map((d)=> d.montant),
+                    barPercentage: 0.6,
+                  },
+                ],
+              }}
+              options={{
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+                scales: {
+                  x: {
+                    grid: {
+                      display: false,
+                      drawTicks: false,
                     },
-                  ],
-                }}
-                options={{
-                  plugins: {
-                    legend: {
+                    ticks: {
                       display: false,
                     },
                   },
-                  maintainAspectRatio: false,
-                  scales: {
-                    x: {
-                      border: {
-                        display: false,
-                      },
-                      grid: {
-                        display: false,
-                        drawBorder: false,
-                      },
-                      ticks: {
-                        display: false,
-                      },
-                    },
-                    y: {
-                      min: 30,
-                      max: 89,
+                  y: {
+                    border: {
                       display: false,
-                      grid: {
-                        display: false,
-                      },
-                      ticks: {
-                        display: false,
-                      },
+                    },
+                    grid: {
+                      display: false,
+                      drawBorder: false,
+                      drawTicks: false,
+                    },
+                    ticks: {
+                      display: false,
                     },
                   },
-                  elements: {
-                    line: {
-                      borderWidth: 1,
-                      tension: 0.4,
-                    },
-                    point: {
-                      radius: 4,
-                      hitRadius: 10,
-                      hoverRadius: 4,
-                    },
-                  },
-                }}
-              />
+                },
+              }}
+            />
             }
           />
         </CCol>
@@ -137,11 +129,11 @@ const WidgetsDropdown = (props) => {
             color="success"
             value={
               <>
-                $6.200{' '}
-                <span className="fs-6 fw-normal">
-                  (40.9% <CIcon icon={cilArrowTop} />)
-                </span>
-              </>
+              { new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD', notation: 'compact' }).format(format?.transactionReussie?.montant)}
+              <span className="fs-6 fw-normal">
+                 ({ new Intl.NumberFormat('fr-FR', { style: 'decimal', notation: 'compact' }).format(format?.transactionReussie?.nbr)})
+              </span>
+            </>
             }
             title="Transactions réussies"
             // action={
@@ -158,66 +150,54 @@ const WidgetsDropdown = (props) => {
             //   </CDropdown>
             // }
             chart={
-              <CChartLine
-                ref={widgetChartRef2}
-                className="mt-3 mx-3"
-                style={{ height: '70px' }}
-                data={{
-                  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                  datasets: [
-                    {
-                      label: 'My First dataset',
-                      backgroundColor: 'transparent',
-                      borderColor: 'rgba(255,255,255,.55)',
-                      pointBackgroundColor: getStyle('--cui-info'),
-                      data: [1, 18, 9, 17, 34, 22, 11],
+              <CChartBar
+              className="mt-3 mx-3"
+              style={{ height: '70px' }}
+              data={{
+                labels: ['Janv.', 'Fevr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil', "Aôut", "Sept.", "Oct."],
+                datasets: [
+                  {
+                    label: 'Transaction reussies',
+                    backgroundColor: 'rgba(255,255,255,.2)',
+                    borderColor: 'rgba(255,255,255,.55)',
+                    data: Object.values(format.chart).map((d)=> d.transactionReussie),
+                    barPercentage: 0.6,
+                  },
+                ],
+              }}
+              options={{
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+                scales: {
+                  x: {
+                    grid: {
+                      display: false,
+                      drawTicks: false,
                     },
-                  ],
-                }}
-                options={{
-                  plugins: {
-                    legend: {
+                    ticks: {
                       display: false,
                     },
                   },
-                  maintainAspectRatio: false,
-                  scales: {
-                    x: {
-                      border: {
-                        display: false,
-                      },
-                      grid: {
-                        display: false,
-                        drawBorder: false,
-                      },
-                      ticks: {
-                        display: false,
-                      },
-                    },
-                    y: {
-                      min: -9,
-                      max: 39,
+                  y: {
+                    border: {
                       display: false,
-                      grid: {
-                        display: false,
-                      },
-                      ticks: {
-                        display: false,
-                      },
+                    },
+                    grid: {
+                      display: false,
+                      drawBorder: false,
+                      drawTicks: false,
+                    },
+                    ticks: {
+                      display: false,
                     },
                   },
-                  elements: {
-                    line: {
-                      borderWidth: 1,
-                    },
-                    point: {
-                      radius: 4,
-                      hitRadius: 10,
-                      hoverRadius: 4,
-                    },
-                  },
-                }}
-              />
+                },
+              }}
+            />
             }
           />
         </CCol>
@@ -226,11 +206,11 @@ const WidgetsDropdown = (props) => {
             color="danger"
             value={
               <>
-                44K{' '}
-                <span className="fs-6 fw-normal">
-                  (-23.6% <CIcon icon={cilArrowBottom} />)
-                </span>
-              </>
+              { new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD', notation: 'compact' }).format(format?.transactionBloquee?.montant)}
+              <span className="fs-6 fw-normal">
+                 ({ new Intl.NumberFormat('fr-FR', { style: 'decimal', notation: 'compact' }).format(format?.transactionBloquee?.nbr)})
+              </span>
+            </>
             }
             title="Transaction bloquées"
             // action={
@@ -251,30 +231,13 @@ const WidgetsDropdown = (props) => {
                 className="mt-3 mx-3"
                 style={{ height: '70px' }}
                 data={{
-                  labels: [
-                    'January',
-                    'February',
-                    'March',
-                    'April',
-                    'May',
-                    'June',
-                    'July',
-                    'August',
-                    'September',
-                    'October',
-                    'November',
-                    'December',
-                    'January',
-                    'February',
-                    'March',
-                    'April',
-                  ],
+                  labels: ['Janv.', 'Fevr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil', "Aôut", "Sept.", "Oct."],
                   datasets: [
                     {
-                      label: 'My First dataset',
+                      label: 'Transaction bloquées',
                       backgroundColor: 'rgba(255,255,255,.2)',
                       borderColor: 'rgba(255,255,255,.55)',
-                      data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
+                      data: Object.values(format.chart).map((d)=> d.transactionBloquee),
                       barPercentage: 0.6,
                     },
                   ],

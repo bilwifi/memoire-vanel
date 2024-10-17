@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -9,6 +9,7 @@ import {
   CSidebarHeader,
   CSidebarToggler,
   CButton,
+  CSpinner,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
@@ -17,6 +18,7 @@ import { AppSidebarNav } from './AppSidebarNav'
 import { logo } from 'src/assets/brand/logo'
 import { sygnet } from 'src/assets/brand/sygnet'
 
+import { generateDataSimulation } from 'src/utils/script'
 // sidebar nav config
 import navigation from '../_nav'
 
@@ -24,6 +26,14 @@ const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const runSim = async () => {
+    setIsLoading(true)
+    const data = await generateDataSimulation({ isTest: false })
+    dispatch({ type: 'set', data })
+    setIsLoading(false)
+  }
 
   return (
     <CSidebar
@@ -39,10 +49,11 @@ const AppSidebar = () => {
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
           {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} /> */}
-          <CButton color="primary" size="lg">
+          {isLoading ? <CSpinner variant="grow" color="warning"  /> :  <CButton color="primary" size="lg" disabled={isLoading} onClick={runSim}>
             Lancer la simulation
-          </CButton>
+          </CButton>}
           <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+       
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"

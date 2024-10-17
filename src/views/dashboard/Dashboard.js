@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import classNames from 'classnames'
+
+import { useSelector } from 'react-redux'
 
 import {
   CAvatar,
@@ -18,6 +20,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CSpinner,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
@@ -55,134 +58,177 @@ import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import MainChart from './MainChart'
 
 const Dashboard = () => {
-  const progressExample = [
-    { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
-    { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
-    { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
-    { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
-  ]
-
-  const progressGroupExample1 = [
-    { title: 'Monday', value1: 34, value2: 78 },
-    { title: 'Tuesday', value1: 56, value2: 94 },
-    { title: 'Wednesday', value1: 12, value2: 67 },
-    { title: 'Thursday', value1: 43, value2: 91 },
-    { title: 'Friday', value1: 22, value2: 73 },
-    { title: 'Saturday', value1: 53, value2: 82 },
-    { title: 'Sunday', value1: 9, value2: 69 },
-  ]
-
-  const progressGroupExample2 = [
-    { title: 'Male', icon: cilUser, value: 53 },
-    { title: 'Female', icon: cilUserFemale, value: 43 },
-  ]
-
-  const progressGroupExample3 = [
-    { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
-    { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
-    { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
-    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
-  ]
+  const data = useSelector((state) => state.data || [])
 
   // Transaction generer ici
 
-  const tableExample = [
-    {
-      avatar: { src: avatar1, status: 'success' },
-      user: {
-        name: 'Yiorgos Avraamu',
-        new: true,
-        registered: 'Jan 1, 2023',
+  const format = useMemo(() => {
+    const df = {
+      transaction: {
+        nbr: 0,
+        montant: 0,
       },
-      country: { name: 'USA', flag: cifUs },
-      usage: {
-        value: 50,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'success',
+      transactionBloquee: {
+        nbr: 0,
+        montant: 0,
       },
-      payment: { name: 'Mastercard', icon: cibCcMastercard },
-      activity: '10 sec ago',
-    },
-    {
-      avatar: { src: avatar2, status: 'danger' },
-      user: {
-        name: 'Avram Tarasios',
-        new: false,
-        registered: 'Jan 1, 2023',
+      transactionReussie: {
+        nbr: 0,
+        montant: 0,
       },
-      country: { name: 'Brazil', flag: cifBr },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'info',
+      chart: {
+        1: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        2: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        3: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        4: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        5: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        6: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        7: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        8: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        9: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        10: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        11: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
+        12: {
+          nbr: 0,
+          montant: 0,
+          transactionReussie: 0,
+          transactionReussieNbr: 0,
+          transactionBloquee: 0,
+          transactionBloqueeNbr: 0,
+        },
       },
-      payment: { name: 'Visa', icon: cibCcVisa },
-      activity: '5 minutes ago',
-    },
-    {
-      avatar: { src: avatar3, status: 'warning' },
-      user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2023' },
-      country: { name: 'India', flag: cifIn },
-      usage: {
-        value: 74,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'warning',
-      },
-      payment: { name: 'Stripe', icon: cibCcStripe },
-      activity: '1 hour ago',
-    },
-    {
-      avatar: { src: avatar4, status: 'secondary' },
-      user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2023' },
-      country: { name: 'France', flag: cifFr },
-      usage: {
-        value: 98,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'danger',
-      },
-      payment: { name: 'PayPal', icon: cibCcPaypal },
-      activity: 'Last month',
-    },
-    {
-      avatar: { src: avatar5, status: 'success' },
-      user: {
-        name: 'Agapetus Tadeáš',
-        new: true,
-        registered: 'Jan 1, 2023',
-      },
-      country: { name: 'Spain', flag: cifEs },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'primary',
-      },
-      payment: { name: 'Google Wallet', icon: cibCcApplePay },
-      activity: 'Last week',
-    },
-    {
-      avatar: { src: avatar6, status: 'danger' },
-      user: {
-        name: 'Friderik Dávid',
-        new: true,
-        registered: 'Jan 1, 2023',
-      },
-      country: { name: 'Poland', flag: cifPl },
-      usage: {
-        value: 43,
-        period: 'Jun 11, 2023 - Jul 10, 2023',
-        color: 'success',
-      },
-      payment: { name: 'Amex', icon: cibCcAmex },
-      activity: 'Last week',
-    },
-  ]
+      clients: {},
+    }
+
+    data.forEach((d) => {
+      const monthIndex = new Date(d.dateCreation).getMonth() + 1
+
+      df.transaction.nbr += 1
+      df.transaction.montant += d.montant
+      df.chart[monthIndex].nbr += 1
+      df.chart[monthIndex].montant += d.montant
+
+      if (d.estValide) {
+        df.transactionReussie.nbr += 1
+        df.transactionReussie.montant += d.montant
+
+        df.chart[monthIndex].transactionReussieNbr += 1
+        df.chart[monthIndex].transactionReussie += d.montant
+      } else {
+        df.transactionBloquee.nbr += 1
+        df.transactionBloquee.montant += d.montant
+        df.chart[monthIndex].transactionBloqueeNbr += 1
+        df.chart[monthIndex].transactionBloquee += d.montant
+      }
+
+      // group client
+
+      console.log("d.client_id",d.client_id)
+
+      if (df.clients[d.client_id]) {
+        const c = df.clients[d.client_id]
+        df.clients[d.client_id] = {
+          ...c,
+          nbrTransactionReussie: d.estValide ? c.nbrTransactionReussie + 1 : c.nbrTransactionReussie,
+          nbrTransactionBloquee: !d.estValide ? c.nbrTransactionBloquee + 1 : c.nbrTransactionBloquee,
+          nbrTransaction: c.nbrTransaction + 1,
+        }
+
+      } else {
+        df.clients[d.client_id] = {
+          nbrTransactionReussie: d.estValide ? 1 : 0,
+          nbrTransactionBloquee: !d.estValide ? 1 : 0,
+          nbrTransaction: 1,
+          client : d.client
+        }
+      }
+    })
+
+    return df
+  }, [data])
 
   return (
     <>
       <CRow>
         <CCol>
-          <WidgetsDropdown className="mb-4" />
+          <WidgetsDropdown className="mb-4" dataFormat={format} />
         </CCol>
         <CCol>
           <CCard className="mb-4">
@@ -212,7 +258,7 @@ const Dashboard = () => {
                   </CButtonGroup> */}
                 </CCol>
               </CRow>
-              <MainChart />
+              <MainChart data={Object.values(format.chart || {})} />
             </CCardBody>
             {/* <CCardFooter>
               <CRow
@@ -347,22 +393,21 @@ const Dashboard = () => {
                     {/* <CTableHeaderCell className="bg-body-tertiary text-center">
                       Payment Method
                     </CTableHeaderCell> */}
-                    <CTableHeaderCell className="bg-body-tertiary">
+                    {/* <CTableHeaderCell className="bg-body-tertiary">
                       Dernière transaction
-                    </CTableHeaderCell>
+                    </CTableHeaderCell> */}
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
+                  {Object.values(format.clients).sort((a, b) => b.nbrTransactionBloquee-a.nbrTransactionBloquee).map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
                       {/* <CTableDataCell className="text-center">
                         <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
                       </CTableDataCell> */}
                       <CTableDataCell>
-                        <div>{item.user.name}</div>
+                        <div>{item?.client?.nom}</div>
                         <div className="small text-body-secondary text-nowrap">
-                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                          {item.user.registered}
+                          <span>{item?.client?.id}</span>
                         </div>
                       </CTableDataCell>
                       {/* <CTableDataCell className="text-center">
@@ -370,20 +415,20 @@ const Dashboard = () => {
                       </CTableDataCell> */}
                       <CTableDataCell>
                         <div className="d-flex justify-content-between text-nowrap">
-                          <div className="fw-semibold">{item.usage.value}%</div>
+                          <div className="fw-semibold">{`${parseInt((item.nbrTransactionBloquee*100)/item.nbrTransaction,10)}`}%</div>
                           <div className="ms-3">
-                            <small className="text-body-secondary">{item.usage.period}</small>
+                            <small className="text-body-secondary">{`${item.nbrTransaction} transactions | ${item.nbrTransactionBloquee} bloquées | ${item.nbrTransactionReussie} réussies`}</small>
                           </div>
                         </div>
-                        <CProgress thin color={item.usage.color} value={item.usage.value} />
+                        <CProgress thin  value={parseInt((item.nbrTransactionBloquee*100)/item.nbrTransaction,10)} />
                       </CTableDataCell>
                       {/* <CTableDataCell className="text-center">
                         <CIcon size="xl" icon={item.payment.icon} />
                       </CTableDataCell> */}
-                      <CTableDataCell>
-                        <div className="small text-body-secondary text-nowrap">Last login</div>
-                        <div className="fw-semibold text-nowrap">{item.activity}</div>
-                      </CTableDataCell>
+                      {/* <CTableDataCell>
+                        <div className="small text-body-secondary text-nowrap">Dernière transaction</div>
+                        <div className="fw-semibold text-nowrap">--</div>
+                      </CTableDataCell> */}
                     </CTableRow>
                   ))}
                 </CTableBody>

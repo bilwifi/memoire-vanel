@@ -13,6 +13,8 @@ import {
   CNavLink,
   CNavItem,
   useColorModes,
+  CSpinner,
+  CRow,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
@@ -31,9 +33,9 @@ import { AppHeaderDropdown } from './header/index'
 const AppHeader = () => {
   const headerRef = useRef()
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
-
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const isLoading = useSelector((state) => state.isLoading)
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
@@ -57,6 +59,8 @@ const AppHeader = () => {
               Dashboard
             </CNavLink>
           </CNavItem>
+         
+
           {/* <CNavItem>
             <CNavLink href="#">Users</CNavLink>
           </CNavItem>
@@ -82,6 +86,7 @@ const AppHeader = () => {
           </CNavItem>
         </CHeaderNav> */}
         <CHeaderNav>
+         {isLoading && <CSpinner variant="grow" color="warning" />}
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
